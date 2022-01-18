@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 import { fetchContacts } from "./api";
 import { loadContacts } from "./store/contacts/contactsSlice";
-import { useAppSelector, useAppDispatch } from "./store/hooks";
+import { useAppDispatch } from "./store/hooks";
+
+import ContactsList from "./components/ContactsList";
 
 function App() {
   const dispatch = useAppDispatch();
-  const contacts = useAppSelector((state) => state.contacts);
-
   useEffect(() => {
     fetchContacts().then((contacts) => {
       dispatch(loadContacts(contacts));
@@ -17,13 +17,10 @@ function App() {
   return (
     <div className="App">
       <h1>My Contacts</h1>
-      {contacts && (
-        <ul>
-          {contacts.map((contact) => (
-            <li key={contact.id}>{contact.name}</li>
-          ))}
-        </ul>
-      )}
+      <section>
+        <h2>Contact list</h2>
+        <ContactsList />
+      </section>
     </div>
   );
 }
