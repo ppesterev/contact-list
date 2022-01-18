@@ -2,18 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { Contact } from "../../types";
 
-interface State {
-  contacts: Contact[];
-}
-
-const initialState: State = { contacts: [] };
-
 const { reducer, actions } = createSlice({
   name: "contacts",
-  initialState,
+  initialState: (): Contact[] | null => null,
   reducers: {
     loadContacts(state, action: PayloadAction<Contact[]>) {
-      state.contacts = action.payload;
+      return action.payload;
     }
   }
 });
