@@ -17,6 +17,7 @@ interface Contact {
   };
 
   isFavorite: boolean;
+  modifiedTimestamp: number;
 }
 
 export type { Contact };
