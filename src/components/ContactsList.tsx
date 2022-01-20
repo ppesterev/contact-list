@@ -1,8 +1,9 @@
 import { useState } from "react";
 
 import { useAppSelector, useAppDispatch } from "../store/hooks";
+import { addContact, editContact } from "../store/contacts/contactsSlice";
 
-import { editContact } from "../store/contacts/contactsSlice";
+import ContactForm from "./ContactForm";
 
 import { ContactRecord } from "../types";
 
@@ -35,33 +36,35 @@ export default function ContactsList() {
   const [editedContactId, setEditedContactId] = useState<
     ContactRecord["id"] | null
   >(null);
-
-  const [editedName, setEditedName] = useState("");
+  const [addingContact, setAddingContact] = useState(false);
 
   return (
     <>
+      <button onClick={() => setAddingContact(true)}>New contact</button>
+      {addingContact && (
+        <ContactForm
+          onSubmit={(contact) => {
+            dispatch(addContact({ timestamp: Date.now(), contact }));
+            setAddingContact(false);
+          }}
+        />
+      )}
       {editedContactId !== null && (
-        <form
-          onSubmit={(evt) => {
-            evt.preventDefault();
+        <ContactForm
+          initialValue={
+            records?.find((rec) => rec.id === editedContactId)?.contact
+          }
+          onSubmit={(contact) => {
             dispatch(
               editContact({
                 id: editedContactId,
-                timestamp: Date.now(),
-                contact: { name: editedName }
+                contact,
+                timestamp: Date.now()
               })
             );
-            setEditedContactId("");
+            setEditedContactId(null);
           }}
-        >
-          <input
-            type="text"
-            name="name"
-            value={editedName}
-            onChange={(evt) => setEditedName(evt.currentTarget.value)}
-          />
-          <button type="submit">Save</button>
-        </form>
+        />
       )}
       {records ? (
         <ul>
@@ -70,12 +73,7 @@ export default function ContactsList() {
               <article>
                 <h3>{contact.name}</h3>
                 <a href={`mailto:${contact.email}`}>{contact.email}</a>
-                <button
-                  onClick={() => {
-                    setEditedName(contact.name);
-                    setEditedContactId(id);
-                  }}
-                >
+                <button onClick={() => setEditedContactId(id)}>
                   Edit contact
                 </button>
               </article>

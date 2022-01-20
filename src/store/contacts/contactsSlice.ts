@@ -11,6 +11,19 @@ const { reducer, actions } = createSlice({
       return action.payload;
     },
 
+    addContact(
+      state,
+      action: PayloadAction<{ timestamp: number; contact: Contact }>
+    ) {
+      const { timestamp, contact } = action.payload;
+      state?.push({
+        id: Math.floor(Math.random() * 10 ** 6).toString(),
+        modifiedTimestamp: timestamp,
+        isFavorite: false,
+        contact
+      });
+    },
+
     editContact(
       state,
       action: PayloadAction<{
@@ -32,4 +45,4 @@ const { reducer, actions } = createSlice({
 });
 
 export default reducer;
-export const { loadContacts, editContact } = actions;
+export const { loadContacts, addContact, editContact } = actions;
