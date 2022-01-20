@@ -42,7 +42,9 @@ function App() {
           }}
         >
           {SORTING_OPTIONS.map((opt) => (
-            <option value={opt}>By {opt}</option>
+            <option key={opt} value={opt}>
+              By {opt}
+            </option>
           ))}
         </select>
         <button onClick={() => dispatch(setDirection(!sortedDescending))}>
