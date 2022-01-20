@@ -1,15 +1,16 @@
 import { useAppSelector } from "../store/hooks";
 
 export default function ContactsList() {
-  const contacts = useAppSelector((state) => {
+  const records = useAppSelector((state) => {
     const { sortedBy, isDescending } = state.sorting;
     return (
       state.contacts &&
       [...state.contacts].sort((a, b) => {
+        const [nameA, nameB] = [a.contact.name, b.contact.name];
         let order = 0;
         switch (sortedBy) {
           case "name":
-            order = a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+            order = nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
             break;
 
           case "date":
@@ -20,10 +21,10 @@ export default function ContactsList() {
     );
   });
 
-  return contacts ? (
+  return records ? (
     <ul>
-      {contacts.map((contact) => (
-        <li key={contact.id}>
+      {records.map(({ id, contact }) => (
+        <li key={id}>
           <article>
             <h3>{contact.name}</h3>
             <a href={`mailto:${contact.email}`}>{contact.email}</a>

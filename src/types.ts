@@ -1,6 +1,4 @@
 interface Contact {
-  id: number;
-
   name: string;
   username: string;
   email: string;
@@ -15,9 +13,13 @@ interface Contact {
     zipcode: string;
     country: string;
   };
+}
 
+interface ContactRecord {
+  contact: Contact;
+  id: string;
   isFavorite: boolean;
   modifiedTimestamp: number;
 }
 
-export type { Contact };
+export type { Contact, ContactRecord };

@@ -1,6 +1,6 @@
 import * as ss from "superstruct";
 
-import { Contact } from "./types";
+import { ContactRecord } from "./types";
 
 const USERS_URL = "https://demo.sibers.com/users";
 
@@ -21,17 +21,18 @@ const contactShape = ss.object({
     country: ss.string()
   }),
   phone: ss.optional(ss.string()),
-  website: ss.optional(ss.string())
+  website: ss.optional(ss.string()),
+  favorite: ss.optional(ss.boolean())
 });
 
-const fetchContacts = async (): Promise<Contact[]> => {
+const fetchContacts = async (): Promise<ContactRecord[]> => {
   const res = await fetch(USERS_URL);
   const rawContacts = await res.json();
 
   // if the users api didn't return an array, something has gone horribly wrong
   ss.assert(rawContacts, ss.array());
 
-  const contacts = rawContacts.map((rawContact) => {
+  const contactRecords = rawContacts.map((rawContact) => {
     try {
       rawContact = ss.mask(rawContact, contactShape);
       ss.assert(rawContact, contactShape);
@@ -44,13 +45,16 @@ const fetchContacts = async (): Promise<Contact[]> => {
       );
 
       return {
-        ...rawContact,
-        address: {
-          ...address,
-          localAddress
+        id: rawContact.id.toString(),
+        contact: {
+          ...rawContact,
+          address: {
+            ...address,
+            localAddress
+          }
         },
 
-        isFavorite: false,
+        isFavorite: !!rawContact.favorite,
         modifiedTimestamp: Date.now()
       };
     } catch (e) {
@@ -61,7 +65,7 @@ const fetchContacts = async (): Promise<Contact[]> => {
   });
 
   // filter out the undefined contacts from earlier
-  return contacts.flatMap((c) => (c ? [c] : []));
+  return contactRecords.flatMap((c) => (c ? [c] : []));
 };
 
 export { fetchContacts };

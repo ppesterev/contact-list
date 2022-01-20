@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { Contact } from "../../types";
+import { ContactRecord } from "../../types";
 
 const { reducer, actions } = createSlice({
   name: "contacts",
-  initialState: (): Contact[] | null => null,
+  initialState: (): ContactRecord[] | null => null,
   reducers: {
-    loadContacts(state, action: PayloadAction<Contact[]>) {
+    loadContacts(state, action: PayloadAction<ContactRecord[]>) {
       return action.payload;
     }
   }
