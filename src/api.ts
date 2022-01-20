@@ -25,47 +25,51 @@ const contactShape = ss.object({
   favorite: ss.optional(ss.boolean())
 });
 
+type RawContact = ss.Infer<typeof contactShape>;
+
+// transform the json data into the internal representation of a contact
+const transformRawContact = (raw: RawContact): ContactRecord => {
+  const { streetA, streetB, streetC, streetD, ...address } = raw.address;
+
+  const localAddress = [streetA, streetB, streetC, streetD].flatMap(
+    (line) => (line ? [line] : []) // remove empty lines and let typescript know
+  );
+
+  const { favorite, id, ...contact } = {
+    ...raw,
+    address: {
+      ...address,
+      localAddress
+    }
+  };
+
+  return {
+    contact,
+    id: id.toString(),
+    isFavorite: !!favorite,
+    modifiedTimestamp: Date.now()
+  };
+};
+
 const fetchContacts = async (): Promise<ContactRecord[]> => {
-  const res = await fetch(USERS_URL);
-  const rawContacts = await res.json();
+  const rawContacts = await (await fetch(USERS_URL)).json();
 
   // if the users api didn't return an array, something has gone horribly wrong
   ss.assert(rawContacts, ss.array());
 
-  const contactRecords = rawContacts.map((rawContact) => {
+  return rawContacts.flatMap((rawContact) => {
     try {
       rawContact = ss.mask(rawContact, contactShape);
       ss.assert(rawContact, contactShape);
 
-      const { streetA, streetB, streetC, streetD, ...address } =
-        rawContact.address;
-
-      const localAddress = [streetA, streetB, streetC, streetD].flatMap(
-        (line) => (line ? [line] : []) // remove empty lines and let typescript know
-      );
-
-      return {
-        id: rawContact.id.toString(),
-        contact: {
-          ...rawContact,
-          address: {
-            ...address,
-            localAddress
-          }
-        },
-
-        isFavorite: !!rawContact.favorite,
-        modifiedTimestamp: Date.now()
-      };
-    } catch (e) {
-      // if any of the user json objects are invalid,
-      // log the error and add undefined to contacts
-      console.error(e);
+      return transformRawContact(rawContact);
+    } catch (err) {
+      // if a rawContact is invalid,
+      // log the error and don't add anything to the output
+      console.error(err);
+      return [];
     }
   });
-
-  // filter out the undefined contacts from earlier
-  return contactRecords.flatMap((c) => (c ? [c] : []));
 };
 
 export { fetchContacts };
