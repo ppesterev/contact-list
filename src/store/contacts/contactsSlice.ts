@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { ContactRecord } from "../../types";
+import { Contact, ContactRecord } from "../../types";
 
 const { reducer, actions } = createSlice({
   name: "contacts",
@@ -8,9 +8,23 @@ const { reducer, actions } = createSlice({
   reducers: {
     loadContacts(state, action: PayloadAction<ContactRecord[]>) {
       return action.payload;
+    },
+
+    editContact(
+      state,
+      action: PayloadAction<{ id: string; timestamp: number; contact: Contact }>
+    ) {
+      const { id, timestamp, contact } = action.payload;
+      const record = state?.find((record) => record.id === id);
+      if (!record) {
+        return;
+      }
+
+      record.modifiedTimestamp = timestamp;
+      record.contact = contact;
     }
   }
 });
 
 export default reducer;
-export const { loadContacts } = actions;
+export const { loadContacts, editContact } = actions;
