@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import deepmerge from "deepmerge";
 
 import { Contact, ContactRecord } from "../../types";
 
@@ -12,7 +13,11 @@ const { reducer, actions } = createSlice({
 
     editContact(
       state,
-      action: PayloadAction<{ id: string; timestamp: number; contact: Contact }>
+      action: PayloadAction<{
+        id: string;
+        timestamp: number;
+        contact: Partial<Contact>;
+      }>
     ) {
       const { id, timestamp, contact } = action.payload;
       const record = state?.find((record) => record.id === id);
@@ -21,7 +26,7 @@ const { reducer, actions } = createSlice({
       }
 
       record.modifiedTimestamp = timestamp;
-      record.contact = contact;
+      record.contact = deepmerge(record.contact, contact);
     }
   }
 });

@@ -1,6 +1,10 @@
+import { useState } from "react";
+
 import { useAppSelector, useAppDispatch } from "../store/hooks";
 
 import { editContact } from "../store/contacts/contactsSlice";
+
+import { ContactRecord } from "../types";
 
 export default function ContactsList() {
   const dispatch = useAppDispatch();
@@ -28,31 +32,59 @@ export default function ContactsList() {
     );
   });
 
-  return records ? (
-    <ul>
-      {records.map(({ id, contact }) => (
-        <li key={id}>
-          <article>
-            <h3>{contact.name}</h3>
-            <a href={`mailto:${contact.email}`}>{contact.email}</a>
-            <button
-              onClick={() =>
-                dispatch(
-                  editContact({
-                    id,
-                    timestamp: Date.now(),
-                    contact: { ...contact, name: "censored" }
-                  })
-                )
-              }
-            >
-              Censor contact
-            </button>
-          </article>
-        </li>
-      ))}
-    </ul>
-  ) : (
-    <span>No contacts found</span>
+  const [editedContactId, setEditedContactId] = useState<
+    ContactRecord["id"] | null
+  >(null);
+
+  const [editedName, setEditedName] = useState("");
+
+  return (
+    <>
+      {editedContactId !== null && (
+        <form
+          onSubmit={(evt) => {
+            evt.preventDefault();
+            dispatch(
+              editContact({
+                id: editedContactId,
+                timestamp: Date.now(),
+                contact: { name: editedName }
+              })
+            );
+            setEditedContactId("");
+          }}
+        >
+          <input
+            type="text"
+            name="name"
+            value={editedName}
+            onChange={(evt) => setEditedName(evt.currentTarget.value)}
+          />
+          <button type="submit">Save</button>
+        </form>
+      )}
+      {records ? (
+        <ul>
+          {records.map(({ id, contact }) => (
+            <li key={id}>
+              <article>
+                <h3>{contact.name}</h3>
+                <a href={`mailto:${contact.email}`}>{contact.email}</a>
+                <button
+                  onClick={() => {
+                    setEditedName(contact.name);
+                    setEditedContactId(id);
+                  }}
+                >
+                  Edit contact
+                </button>
+              </article>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <span>No contacts found</span>
+      )}
+    </>
   );
 }
