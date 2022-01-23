@@ -40,9 +40,22 @@ const { reducer, actions } = createSlice({
 
       record.modifiedTimestamp = timestamp;
       record.contact = deepmerge(record.contact, contact);
+    },
+
+    setFavorite(
+      state,
+      action: PayloadAction<{ id: string; isFavorite: boolean }>
+    ) {
+      const { id, isFavorite } = action.payload;
+      const record = state?.find((rec) => rec.id === id);
+      if (!record) {
+        return;
+      }
+
+      record.isFavorite = isFavorite;
     }
   }
 });
 
 export default reducer;
-export const { loadContacts, addContact, editContact } = actions;
+export const { loadContacts, addContact, editContact, setFavorite } = actions;
