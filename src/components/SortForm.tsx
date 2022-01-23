@@ -1,4 +1,4 @@
-import { sortBy, setDirection } from "../store/sorting/sortingSlice";
+import { sortBy, setDirection } from "../store/slices/sorting/sortingSlice";
 
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { getSorting } from "../store/selectors";

@@ -1,4 +1,7 @@
-import { setSearch, setOnlyFavorites } from "../store/filters/filtersSlice";
+import {
+  setSearch,
+  setOnlyFavorites
+} from "../store/slices/filters/filtersSlice";
 
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { getFilters } from "../store/selectors";

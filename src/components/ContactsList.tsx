@@ -1,7 +1,10 @@
 import { useState } from "react";
 
 import { useAppSelector, useAppDispatch } from "../store/hooks";
-import { addContact, updateContact } from "../store/contacts/contactsSlice";
+import {
+  addContact,
+  updateContact
+} from "../store/slices/contacts/contactsSlice";
 import { getContactsToDisplay } from "../store/selectors";
 
 import ContactForm from "./ContactForm";

@@ -1,8 +1,8 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
-import contactsReducer from "./contacts/contactsSlice";
-import sortingReducer from "./sorting/sortingSlice";
-import filtersReducer from "./filters/filtersSlice";
+import contactsReducer from "./slices/contacts/contactsSlice";
+import sortingReducer from "./slices/sorting/sortingSlice";
+import filtersReducer from "./slices/filters/filtersSlice";
 
 import { syncToStorageMiddleware } from "./middleware/sync-to-storage";
 

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import { fetchContacts } from "../api";
 
-import { loadContacts } from "../store/contacts/contactsSlice";
+import { loadContacts } from "../store/slices/contacts/contactsSlice";
 
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 

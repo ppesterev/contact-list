@@ -1,6 +1,6 @@
 import { useAppDispatch } from "../store/hooks";
 
-import { setFavorite } from "../store/contacts/contactsSlice";
+import { setFavorite } from "../store/slices/contacts/contactsSlice";
 
 import { ContactRecord } from "../types";
 

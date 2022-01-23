@@ -34,7 +34,7 @@ export default function ContactForm({
       onSubmit={onSubmit}
       validationSchema={formContactSchema}
     >
-      {({ handleSubmit, values, errors, setFieldValue }) => (
+      {({ handleSubmit, values, errors }) => (
         <form onSubmit={handleSubmit}>
           <Field name="name" type="text" />
           <Field name="username" type="text" />

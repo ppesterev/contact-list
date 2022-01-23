@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { SORTING_OPTIONS } from "../../const";
+import { SORTING_OPTIONS } from "../../../const";
 
 type SortBy = typeof SORTING_OPTIONS[number];
 

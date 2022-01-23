@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import deepmerge from "deepmerge";
 import { array } from "yup";
 
-import { CONTACTS_STORAGE_KEY } from "../../const";
-import { contactRecordSchema } from "../../schemas";
-import * as storage from "../../storage";
+import { CONTACTS_STORAGE_KEY } from "../../../const";
+import { contactRecordSchema } from "../../../schemas";
+import * as storage from "../../../storage";
 
-import { Contact, ContactRecord } from "../../types";
+import { Contact, ContactRecord } from "../../../types";
 
 const initializeState = (): ContactRecord[] | null => {
   try {
