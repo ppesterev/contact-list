@@ -27,7 +27,10 @@ export default function SortForm() {
           </option>
         ))}
       </select>
-      <button onClick={() => dispatch(setDirection(!isDescending))}>
+      <button
+        type="button"
+        onClick={() => dispatch(setDirection(!isDescending))}
+      >
         {isDescending ? "Desc." : "Asc."}
       </button>
     </form>
