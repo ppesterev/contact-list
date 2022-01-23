@@ -29,7 +29,7 @@ const apiContactSchema = Y.object({
 });
 
 const formContactSchema: Y.SchemaOf<Contact> = Y.object({
-  name: Y.string().defined().required("Please fill in the name"),
+  name: Y.string().required("Please fill in the name"),
   username: Y.string().required("Please provide a username"),
   email: Y.string()
     .email("Please provide a valid email address")
