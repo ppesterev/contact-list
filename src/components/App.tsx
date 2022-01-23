@@ -1,15 +1,15 @@
 import { useEffect } from "react";
 
-import { fetchContacts } from "./api";
+import { fetchContacts } from "../api";
 
-import { loadContacts } from "./store/contacts/contactsSlice";
-import { sortBy, setDirection } from "./store/sorting/sortingSlice";
+import { loadContacts } from "../store/contacts/contactsSlice";
+import { sortBy, setDirection } from "../store/sorting/sortingSlice";
 
-import { useAppSelector, useAppDispatch } from "./store/hooks";
+import { useAppSelector, useAppDispatch } from "../store/hooks";
 
-import ContactsList from "./components/ContactsList";
+import ContactsList from "./ContactsList";
 
-import { SORTING_OPTIONS } from "./const";
+import { SORTING_OPTIONS } from "../const";
 
 function App() {
   const dispatch = useAppDispatch();
