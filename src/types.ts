@@ -22,4 +22,6 @@ interface ContactRecord {
   modifiedTimestamp: number;
 }
 
-export type { Contact, ContactRecord };
+type ID = ContactRecord["id"];
+
+export type { Contact, ContactRecord, ID };

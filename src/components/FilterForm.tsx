@@ -17,16 +17,14 @@ export default function FilterForm() {
         <input
           type="text"
           value={search}
-          onChange={(evt) => dispatch(setSearch(evt.currentTarget.value))}
+          onChange={(evt) => dispatch(setSearch(evt.target.value))}
         />
       </label>
       <label>
         <input
           type="checkbox"
           checked={onlyFavorites}
-          onChange={(evt) =>
-            dispatch(setOnlyFavorites(evt.currentTarget.checked))
-          }
+          onChange={(evt) => dispatch(setOnlyFavorites(evt.target.checked))}
         />
         Only show favorites
       </label>

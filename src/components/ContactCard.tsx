@@ -2,9 +2,7 @@ import { useAppDispatch } from "../store/hooks";
 
 import { setFavorite } from "../store/slices/contacts/contactsSlice";
 
-import { ContactRecord } from "../types";
-
-type ID = ContactRecord["id"];
+import { ContactRecord, ID } from "../types";
 
 interface Props {
   record: ContactRecord;

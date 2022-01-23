@@ -9,20 +9,22 @@ export default function SortForm() {
   const dispatch = useAppDispatch();
   const { sortedBy, isDescending } = useAppSelector(getSorting);
 
+  const onSortingSelected = (value: string) => {
+    // appease typescript
+    let option = SORTING_OPTIONS.find((opt) => opt === value);
+    if (!option) {
+      return;
+    }
+    dispatch(sortBy(option));
+  };
+
+  const onSortDirectionChanged = () => dispatch(setDirection(!isDescending));
+
   return (
     <form>
       <select
         value={sortedBy}
-        onChange={(evt) => {
-          // appease typescript
-          let option = SORTING_OPTIONS.find(
-            (opt) => opt === evt.currentTarget.value
-          );
-          if (!option) {
-            return;
-          }
-          dispatch(sortBy(option));
-        }}
+        onChange={(evt) => onSortingSelected(evt.target.value)}
       >
         {SORTING_OPTIONS.map((opt) => (
           <option key={opt} value={opt}>
@@ -30,10 +32,7 @@ export default function SortForm() {
           </option>
         ))}
       </select>
-      <button
-        type="button"
-        onClick={() => dispatch(setDirection(!isDescending))}
-      >
+      <button type="button" onClick={onSortDirectionChanged}>
         {isDescending ? "Desc." : "Asc."}
       </button>
     </form>
