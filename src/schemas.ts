@@ -1,6 +1,6 @@
 import * as Y from "yup";
 
-import { Contact } from "./types";
+import { Contact, ContactRecord } from "./types";
 
 const apiContactSchema = Y.object({
   id: Y.string().required(),
@@ -42,7 +42,13 @@ const formContactSchema: Y.SchemaOf<Contact> = Y.object({
   ),
 
   address: Y.object({
-    localAddress: Y.array().of(Y.string().required()).min(1).max(4).required(),
+    localAddress: Y.array()
+      .of(Y.string().required())
+      .min(1)
+      .max(4)
+      .required()
+      .defined()
+      .default([]),
     city: Y.string().required("Please provide the city name"),
     state: Y.string(),
     zipcode: Y.string()
@@ -52,7 +58,14 @@ const formContactSchema: Y.SchemaOf<Contact> = Y.object({
   })
 });
 
+const contactRecordSchema: Y.SchemaOf<ContactRecord> = Y.object({
+  contact: formContactSchema,
+  id: Y.string().required(),
+  isFavorite: Y.boolean().required(),
+  modifiedTimestamp: Y.number().required()
+});
+
 type APIContact = Y.InferType<typeof apiContactSchema>;
 
-export { apiContactSchema, formContactSchema };
+export { apiContactSchema, formContactSchema, contactRecordSchema };
 export type { APIContact };
