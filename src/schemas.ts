@@ -45,4 +45,7 @@ const formContactSchema: Y.SchemaOf<Contact> = Y.object({
   })
 });
 
+type APIContact = Y.InferType<typeof apiContactSchema>;
+
 export { apiContactSchema, formContactSchema };
+export type { APIContact };
