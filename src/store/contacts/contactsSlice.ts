@@ -24,7 +24,7 @@ const { reducer, actions } = createSlice({
       });
     },
 
-    editContact(
+    updateContact(
       state,
       action: PayloadAction<{
         id: string;
@@ -58,4 +58,4 @@ const { reducer, actions } = createSlice({
 });
 
 export default reducer;
-export const { loadContacts, addContact, editContact, setFavorite } = actions;
+export const { loadContacts, addContact, updateContact, setFavorite } = actions;

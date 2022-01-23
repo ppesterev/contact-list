@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { useAppSelector, useAppDispatch } from "../store/hooks";
-import { addContact, editContact } from "../store/contacts/contactsSlice";
+import { addContact, updateContact } from "../store/contacts/contactsSlice";
 
 import ContactForm from "./ContactForm";
 import ContactCard from "./ContactCard";
@@ -57,7 +57,7 @@ export default function ContactsList() {
           }
           onSubmit={(contact) => {
             dispatch(
-              editContact({
+              updateContact({
                 id: editedContactId,
                 contact,
                 timestamp: Date.now()
@@ -74,7 +74,6 @@ export default function ContactsList() {
               <ContactCard
                 record={record}
                 onEditContact={(id) => setEditedContactId(id)}
-                onFavorite={() => {}}
               />
             </li>
           ))}
