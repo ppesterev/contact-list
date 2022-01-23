@@ -1,11 +1,32 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import deepmerge from "deepmerge";
+import { array } from "yup";
+
+import { CONTACTS_STORAGE_KEY } from "../../const";
+import { contactRecordSchema } from "../../schemas";
+import * as storage from "../../storage";
 
 import { Contact, ContactRecord } from "../../types";
 
+const initializeState = (): ContactRecord[] | null => {
+  try {
+    const storedRecords = storage.get(CONTACTS_STORAGE_KEY);
+    const records = array()
+      .of(contactRecordSchema.required())
+      .validateSync(storedRecords, {
+        stripUnknown: true
+      });
+
+    return records || null;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+};
+
 const { reducer, actions } = createSlice({
   name: "contacts",
-  initialState: (): ContactRecord[] | null => null,
+  initialState: initializeState,
   reducers: {
     loadContacts(state, action: PayloadAction<ContactRecord[]>) {
       return action.payload;
