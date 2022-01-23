@@ -16,6 +16,7 @@ const defaultValue: Contact = {
   address: {
     localAddress: [""],
     city: "",
+    state: "",
     zipcode: "",
     country: ""
   },
