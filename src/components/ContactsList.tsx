@@ -4,6 +4,7 @@ import { useAppSelector, useAppDispatch } from "../store/hooks";
 import { addContact, editContact } from "../store/contacts/contactsSlice";
 
 import ContactForm from "./ContactForm";
+import ContactCard from "./ContactCard";
 
 import { ContactRecord } from "../types";
 
@@ -68,15 +69,13 @@ export default function ContactsList() {
       )}
       {records ? (
         <ul>
-          {records.map(({ id, contact }) => (
-            <li key={id}>
-              <article>
-                <h3>{contact.name}</h3>
-                <a href={`mailto:${contact.email}`}>{contact.email}</a>
-                <button onClick={() => setEditedContactId(id)}>
-                  Edit contact
-                </button>
-              </article>
+          {records.map((record) => (
+            <li key={record.id}>
+              <ContactCard
+                record={record}
+                onEditContact={(id) => setEditedContactId(id)}
+                onFavorite={() => {}}
+              />
             </li>
           ))}
         </ul>
