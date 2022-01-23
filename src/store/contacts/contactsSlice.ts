@@ -39,7 +39,9 @@ const { reducer, actions } = createSlice({
       }
 
       record.modifiedTimestamp = timestamp;
-      record.contact = deepmerge(record.contact, contact);
+      record.contact = deepmerge(record.contact, contact, {
+        arrayMerge: (_, source) => source
+      });
     },
 
     setFavorite(
