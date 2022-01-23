@@ -1,3 +1,7 @@
+import { useAppDispatch } from "../store/hooks";
+
+import { setFavorite } from "../store/contacts/contactsSlice";
+
 import { ContactRecord } from "../types";
 
 type ID = ContactRecord["id"];
@@ -5,15 +9,13 @@ type ID = ContactRecord["id"];
 interface Props {
   record: ContactRecord;
   onEditContact: (id: ID) => void;
-  onFavorite: (id: ID) => void;
 }
 
-export default function ContactCard({
-  record,
-  onEditContact,
-  onFavorite
-}: Props) {
+export default function ContactCard({ record, onEditContact }: Props) {
+  const dispatch = useAppDispatch();
+
   const {
+    id,
     contact: { name, email, username, phone, website, address },
     isFavorite
   } = record;
@@ -34,8 +36,10 @@ export default function ContactCard({
           Website: <a href={website}>{website}</a>
         </p>
       )}
-      <button onClick={() => onEditContact(record.id)}>Edit contact</button>
-      <button onClick={() => onFavorite(record.id)}>
+      <button onClick={() => onEditContact(id)}>Edit contact</button>
+      <button
+        onClick={() => dispatch(setFavorite({ id, isFavorite: !isFavorite }))}
+      >
         {isFavorite ? "Remove from favorites" : "Add to favorites"}
       </button>
     </article>
