@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { useAppSelector, useAppDispatch } from "../store/hooks";
 import { addContact, updateContact } from "../store/contacts/contactsSlice";
+import { getContactsToDisplay } from "../store/selectors";
 
 import ContactForm from "./ContactForm";
 import ContactCard from "./ContactCard";
@@ -10,29 +11,7 @@ import { ContactRecord } from "../types";
 
 export default function ContactsList() {
   const dispatch = useAppDispatch();
-
-  const records = useAppSelector((state) => {
-    const { sortedBy, isDescending } = state.sorting;
-    return (
-      state.contacts &&
-      [...state.contacts].sort((a, b) => {
-        const [nameA, nameB] = [
-          a.contact.name.toLowerCase(),
-          b.contact.name.toLowerCase()
-        ];
-        let order = 0;
-        switch (sortedBy) {
-          case "name":
-            order = nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
-            break;
-
-          case "date":
-            order = a.modifiedTimestamp - b.modifiedTimestamp;
-        }
-        return isDescending ? -order : order;
-      })
-    );
-  });
+  const records = useAppSelector(getContactsToDisplay);
 
   const [editedContactId, setEditedContactId] = useState<
     ContactRecord["id"] | null

@@ -1,10 +1,11 @@
 import { setSearch, setOnlyFavorites } from "../store/filters/filtersSlice";
 
 import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { getFilters } from "../store/selectors";
 
 export default function FilterForm() {
   const dispatch = useAppDispatch();
-  const { search, onlyFavorites } = useAppSelector((state) => state.filters);
+  const { search, onlyFavorites } = useAppSelector(getFilters);
 
   return (
     <form>
