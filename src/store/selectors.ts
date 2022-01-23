@@ -28,7 +28,7 @@ const getContactsToDisplay = createSelector(
     if (!records) {
       return records;
     }
-    return records?.sort((a, b) => {
+    return records.slice().sort((a, b) => {
       const [nameA, nameB] = [
         a.contact.name.toLowerCase(),
         b.contact.name.toLowerCase()
