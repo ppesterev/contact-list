@@ -4,7 +4,7 @@ import { fetchContacts } from "../api";
 
 import { loadContacts } from "../store/contacts/contactsSlice";
 
-import { useAppDispatch } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 import ContactsList from "./ContactsList";
 import SortForm from "./SortForm";
@@ -12,7 +12,12 @@ import FilterForm from "./FilterForm";
 
 function App() {
   const dispatch = useAppDispatch();
+  const contacts = useAppSelector((state) => state.contacts);
   useEffect(() => {
+    if (contacts) {
+      return;
+    }
+
     fetchContacts().then((contacts) => {
       dispatch(loadContacts(contacts));
     });
