@@ -3,7 +3,7 @@ import * as Y from "yup";
 import { Contact } from "./types";
 
 const apiContactSchema = Y.object({
-  id: Y.number().required(),
+  id: Y.string().required(),
   name: Y.string().defined().required(),
   username: Y.string().required(),
   email: Y.string().email().required(),
@@ -16,14 +16,16 @@ const apiContactSchema = Y.object({
 
     city: Y.string().required(),
     state: Y.string(),
-    zipcode: Y.string().required(),
+    zipcode: Y.string()
+      .required()
+      .matches(/^[0-9A-Z\-\ ]{3,10}$/),
     country: Y.string().required()
   }),
 
   phone: Y.string(),
-  website: Y.string().url(),
+  website: Y.string(),
 
-  favorite: Y.boolean()
+  favorite: Y.boolean().default(false)
 });
 
 const formContactSchema: Y.SchemaOf<Contact> = Y.object({
@@ -40,7 +42,9 @@ const formContactSchema: Y.SchemaOf<Contact> = Y.object({
     localAddress: Y.array().of(Y.string().required()).min(1).max(4).required(),
     city: Y.string().required("Please provide the city name"),
     state: Y.string(),
-    zipcode: Y.string().required("Please fill in the zipcode"),
+    zipcode: Y.string()
+      .required("Please fill in the postal code")
+      .matches(/^[0-9A-Z\-\ ]{3,10}$/, "Please enter a valid postal code"),
     country: Y.string().required("Please specify the country")
   })
 });
