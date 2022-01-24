@@ -1,8 +1,10 @@
 import { Formik, Field, FieldArray } from "formik";
+import { Columns } from "react-bulma-components";
 
 import { formContactSchema } from "../schemas";
 
 import FormField from "./FormField";
+import AddressField from "./AddressField";
 
 import { Contact } from "../types";
 
@@ -39,44 +41,73 @@ export default function ContactForm({
       {({ handleSubmit, values, errors }) => (
         <form onSubmit={handleSubmit}>
           <FormField name="name" label="Name" />
-          <FormField name="username" type="text" label="Username" />
-          <FormField name="email" type="email" label="Email" />
-          <FormField name="phone" type="text" label="Phone number" />
-          <FormField name="website" type="text" label="Website" />
+          <Columns>
+            <Columns.Column>
+              <FormField name="username" type="text" label="Username" />
+            </Columns.Column>
+            <Columns.Column>
+              <FormField name="email" type="email" label="Email" />
+            </Columns.Column>
+          </Columns>
+          <Columns>
+            <Columns.Column>
+              <FormField name="phone" type="tel" label="Phone number" />
+            </Columns.Column>
+            <Columns.Column>
+              <FormField
+                name="website"
+                type="url"
+                formNoValidate
+                label="Website"
+              />
+            </Columns.Column>
+          </Columns>
 
           <fieldset>
             <legend>Address</legend>
             <FieldArray name="address.localAddress">
-              {({ push, pop, remove }) => (
-                <div>
-                  {values.address.localAddress.map((_, idx) => (
-                    <div key={idx}>
-                      <Field
-                        name={`address.localAddress[${idx}]`}
-                        type="text"
-                      />
-                      <button type="button" onClick={() => remove(idx)}>
-                        Remove
-                      </button>
-                    </div>
-                  ))}
-                  <button type="button" onClick={() => push("")}>
-                    More
-                  </button>
-                  <button type="button" onClick={() => pop()}>
-                    Less
-                  </button>
-                </div>
-              )}
+              {({ remove, insert }) =>
+                values.address.localAddress.map((_, idx) => (
+                  <AddressField
+                    key={idx}
+                    name={`address.localAddress[${idx}]`}
+                    onAddLine={() =>
+                      values.address.localAddress.length < 4 &&
+                      insert(idx + 1, "")
+                    }
+                    onRemoveLine={() =>
+                      values.address.localAddress.length > 1 && remove(idx)
+                    }
+                  />
+                ))
+              }
             </FieldArray>
-            City: <Field name="address.city" type="text" />
-            State: <Field name="address.state" type="text" />
-            Postal code: <Field name="address.zipcode" type="text" />
-            Country: <Field name="address.country" type="text" />
+            <Columns>
+              <Columns.Column>
+                <FormField name="address.city" type="text" label="City" />
+              </Columns.Column>
+              <Columns.Column>
+                <FormField
+                  name="address.state"
+                  type="text"
+                  label="State or province"
+                />
+              </Columns.Column>
+            </Columns>
+            <Columns>
+              <Columns.Column>
+                <FormField
+                  name="address.zipcode"
+                  type="text"
+                  label="Postal code"
+                />
+              </Columns.Column>
+              <Columns.Column>
+                <FormField name="address.country" type="text" label="Country" />
+              </Columns.Column>
+            </Columns>
           </fieldset>
           <button type="submit">Save</button>
-
-          <p>{JSON.stringify(errors)}</p>
         </form>
       )}
     </Formik>
