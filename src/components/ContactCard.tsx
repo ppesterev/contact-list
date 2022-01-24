@@ -1,3 +1,5 @@
+import { Box } from "react-bulma-components";
+
 import { useAppDispatch } from "../store/hooks";
 
 import {
@@ -25,7 +27,7 @@ export default function ContactCard({ record, onEditContact }: Props) {
   } = record;
 
   return (
-    <article>
+    <Box renderAs="article">
       <ContextualHeading>
         {name} <span>({username})</span>
       </ContextualHeading>
@@ -51,6 +53,6 @@ export default function ContactCard({ record, onEditContact }: Props) {
           Delete contact
         </button>
       </HeadingRegion>
-    </article>
+    </Box>
   );
 }
