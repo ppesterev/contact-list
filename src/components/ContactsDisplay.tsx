@@ -15,7 +15,7 @@ import { Contact, ID } from "../types";
 
 export default function ContactsDisplay() {
   const dispatch = useAppDispatch();
-  const { sortedBy } = useAppSelector(getSorting);
+  const { sortedBy, isDescending } = useAppSelector(getSorting);
   const records = useAppSelector(getContactsToDisplay);
 
   const [editedContactId, setEditedContactId] = useState<ID | null>(null);
@@ -60,6 +60,7 @@ export default function ContactsDisplay() {
           <AlphabeticGroup
             items={records}
             alphabetization={(record) => record.contact.name}
+            reverse={isDescending}
           >
             {(records) => (
               <ContactsList

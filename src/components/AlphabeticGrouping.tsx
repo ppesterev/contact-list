@@ -6,6 +6,7 @@ import HeadingRegion from "./HeadingRegion";
 interface Props<T> {
   items: T[];
   alphabetization: (item: T) => string;
+  reverse?: boolean;
   children: (groupItems: T[]) => ReactNode;
 }
 
@@ -17,6 +18,7 @@ interface Group<T> {
 export default function AlphabeticGrouping<T>({
   items,
   alphabetization,
+  reverse = false,
   children
 }: Props<T>) {
   const groups: Group<T>[] = useMemo(() => {
@@ -26,7 +28,8 @@ export default function AlphabeticGrouping<T>({
       const [stringA, stringB] = [a, b].map((item) =>
         alphabetization(item).toLowerCase()
       );
-      return stringA < stringB ? -1 : stringA > stringB ? 1 : 0;
+      const order = stringA < stringB ? -1 : stringA > stringB ? 1 : 0;
+      return reverse ? -order : order;
     });
 
     for (const item of alphabetizedItems) {
