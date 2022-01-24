@@ -1,13 +1,13 @@
 import { useState } from "react";
 
 import { useAppSelector, useAppDispatch } from "../store/hooks";
+import { getSorting, getContactsToDisplay } from "../store/selectors";
 import {
   addContact,
   updateContact
 } from "../store/slices/contacts/contactsSlice";
-import { getSorting, getContactsToDisplay } from "../store/selectors";
 
-import ContactForm from "./ContactForm";
+import ContactFormDialog from "./ContactFormDialog";
 import ContactsList from "./ContactsList";
 import AlphabeticGroup from "./AlphabeticGrouping";
 
@@ -46,15 +46,20 @@ export default function ContactsDisplay() {
   return (
     <>
       <button onClick={() => setAddingContact(true)}>New contact</button>
-      {addingContact && <ContactForm onSubmit={onAddSubmitted} />}
-      {editedContactId !== null && (
-        <ContactForm
-          initialValue={
-            records?.find((rec) => rec.id === editedContactId)?.contact
-          }
-          onSubmit={onEditSubmitted}
-        />
-      )}
+      <ContactFormDialog
+        show={addingContact && editedContactId === null}
+        onClose={() => setAddingContact(false)}
+        onSubmit={onAddSubmitted}
+      />
+      <ContactFormDialog
+        show={!addingContact && editedContactId !== null}
+        onClose={() => setEditedContactId(null)}
+        onSubmit={onEditSubmitted}
+        initialValue={
+          records?.find((record) => record.id === editedContactId)?.contact
+        }
+      />
+
       {records &&
         (isAlphabetical ? (
           <AlphabeticGroup
