@@ -1,10 +1,4 @@
-import { useEffect } from "react";
-
-import { fetchContacts } from "../api";
-
-import { loadContacts } from "../store/slices/contacts/contactsSlice";
-
-import { useAppDispatch, useAppSelector } from "../store/hooks";
+import useFetchContacts from "../hooks/use-fetch-contacts";
 
 import ContextualHeading from "./ContextualHeading";
 import HeadingRegion from "./HeadingRegion";
@@ -13,17 +7,7 @@ import SortForm from "./SortForm";
 import FilterForm from "./FilterForm";
 
 function App() {
-  const dispatch = useAppDispatch();
-  const contacts = useAppSelector((state) => state.contacts);
-  useEffect(() => {
-    if (contacts) {
-      return;
-    }
-
-    fetchContacts().then((contacts) => {
-      dispatch(loadContacts(contacts));
-    });
-  }, []);
+  useFetchContacts();
 
   return (
     <div className="App">
