@@ -1,6 +1,9 @@
 import { useAppDispatch } from "../store/hooks";
 
-import { setFavorite } from "../store/slices/contacts/contactsSlice";
+import {
+  setFavorite,
+  deleteContact
+} from "../store/slices/contacts/contactsSlice";
 
 import ContextualHeading from "./ContextualHeading";
 import HeadingRegion from "./HeadingRegion";
@@ -43,6 +46,9 @@ export default function ContactCard({ record, onEditContact }: Props) {
           onClick={() => dispatch(setFavorite({ id, isFavorite: !isFavorite }))}
         >
           {isFavorite ? "Remove from favorites" : "Add to favorites"}
+        </button>
+        <button onClick={() => dispatch(deleteContact(id))}>
+          Delete contact
         </button>
       </HeadingRegion>
     </article>

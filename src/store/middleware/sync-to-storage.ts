@@ -14,6 +14,7 @@ export const syncToStorageMiddleware: Middleware<{}, RootState> =
       case "contacts/loadContacts":
       case "contacts/addContact":
       case "contacts/updateContact":
+      case "contacts/deleteContact":
       case "contacts/setFavorite":
         set(CONTACTS_STORAGE_KEY, getState().contacts);
         break;

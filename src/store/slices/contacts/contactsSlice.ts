@@ -6,13 +6,14 @@ import { CONTACTS_STORAGE_KEY } from "../../../const";
 import { contactRecordSchema } from "../../../schemas";
 import * as storage from "../../../storage";
 
-import { Contact, ContactRecord } from "../../../types";
+import { Contact, ContactRecord, ID } from "../../../types";
 
 const initializeState = (): ContactRecord[] | null => {
   try {
     const storedRecords = storage.get(CONTACTS_STORAGE_KEY);
     const records = array()
       .of(contactRecordSchema.required())
+      .nullable()
       .validateSync(storedRecords, {
         stripUnknown: true
       });
@@ -65,6 +66,10 @@ const { reducer, actions } = createSlice({
       });
     },
 
+    deleteContact(state, action: PayloadAction<ID>) {
+      return state?.filter((record) => record.id !== action.payload);
+    },
+
     setFavorite(
       state,
       action: PayloadAction<{ id: string; isFavorite: boolean }>
@@ -81,4 +86,10 @@ const { reducer, actions } = createSlice({
 });
 
 export default reducer;
-export const { loadContacts, addContact, updateContact, setFavorite } = actions;
+export const {
+  loadContacts,
+  addContact,
+  updateContact,
+  deleteContact,
+  setFavorite
+} = actions;
