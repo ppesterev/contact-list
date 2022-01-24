@@ -1,3 +1,5 @@
+import { Content, Container } from "react-bulma-components";
+
 import useFetchContacts from "../hooks/use-fetch-contacts";
 
 import ContextualHeading from "./ContextualHeading";
@@ -10,29 +12,31 @@ function App() {
   useFetchContacts();
 
   return (
-    <div className="App">
-      <ContextualHeading>My Contacts</ContextualHeading>
-      <HeadingRegion>
-        <section>
-          <ContextualHeading>Sorting</ContextualHeading>
-          <HeadingRegion>
-            <SortForm />
-          </HeadingRegion>
-        </section>
-        <section>
-          <ContextualHeading>Filters</ContextualHeading>
-          <HeadingRegion>
-            <FilterForm />
-          </HeadingRegion>
-        </section>
-        <section>
-          <ContextualHeading>Contact list</ContextualHeading>
-          <HeadingRegion>
-            <ContactsDisplay />
-          </HeadingRegion>
-        </section>
-      </HeadingRegion>
-    </div>
+    <Content>
+      <Container>
+        <ContextualHeading>My Contacts</ContextualHeading>
+        <HeadingRegion>
+          <section>
+            <ContextualHeading>Sorting</ContextualHeading>
+            <HeadingRegion>
+              <SortForm />
+            </HeadingRegion>
+          </section>
+          <section>
+            <ContextualHeading>Filters</ContextualHeading>
+            <HeadingRegion>
+              <FilterForm />
+            </HeadingRegion>
+          </section>
+          <section>
+            <ContextualHeading>Contact list</ContextualHeading>
+            <HeadingRegion>
+              <ContactsDisplay />
+            </HeadingRegion>
+          </section>
+        </HeadingRegion>
+      </Container>
+    </Content>
   );
 }
 
