@@ -2,6 +2,8 @@ import { Formik, Field, FieldArray } from "formik";
 
 import { formContactSchema } from "../schemas";
 
+import FormField from "./FormField";
+
 import { Contact } from "../types";
 
 interface Props {
@@ -36,11 +38,11 @@ export default function ContactForm({
     >
       {({ handleSubmit, values, errors }) => (
         <form onSubmit={handleSubmit}>
-          <Field name="name" type="text" />
-          <Field name="username" type="text" />
-          <Field name="email" type="email" />
-          <Field name="phone" type="text" />
-          <Field name="website" type="text" />
+          <FormField name="name" label="Name" />
+          <FormField name="username" type="text" label="Username" />
+          <FormField name="email" type="email" label="Email" />
+          <FormField name="phone" type="text" label="Phone number" />
+          <FormField name="website" type="text" label="Website" />
 
           <fieldset>
             <legend>Address</legend>
