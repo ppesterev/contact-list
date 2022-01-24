@@ -35,11 +35,13 @@ const formContactSchema: Y.SchemaOf<Contact> = Y.object({
     .email("Please provide a valid email address")
     .required("Please provide an email address"),
 
-  phone: Y.string(),
-  website: Y.string().matches(
-    /^(https?:\/\/)?([a-z0-9]+\.){1,3}[a-z]+$/,
-    "Please provide a valid URL"
-  ),
+  phone: Y.string().optional(),
+  website: Y.string()
+    .optional()
+    .matches(
+      /^((https?:\/\/)?([a-z0-9]+\.){1,3}[a-z]+)?$/,
+      "Please provide a valid URL"
+    ),
 
   address: Y.object({
     localAddress: Y.array()
