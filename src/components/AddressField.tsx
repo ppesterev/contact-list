@@ -1,7 +1,13 @@
 import { InputHTMLAttributes } from "react";
 
 import { useField } from "formik";
-import { Form, Button } from "react-bulma-components";
+import FormControl from "@material-ui/core/FormControl";
+import Input from "@material-ui/core/Input";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
+
+import Add from "@material-ui/icons/Add";
+import Remove from "@material-ui/icons/Remove";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
@@ -13,20 +19,24 @@ export default function AddressField({ name, onAddLine, onRemoveLine }: Props) {
   const [input, meta, helpers] = useField(name);
 
   return (
-    <Form.Field kind="addons">
-      <Form.Control fullwidth>
-        <Form.Input {...input} />
-      </Form.Control>
-      <Form.Control>
-        <Button type="button" aria-label="Add line" onClick={onAddLine}>
-          +
-        </Button>
-      </Form.Control>
-      <Form.Control>
-        <Button type="button" aria-label="Remove line" onClick={onRemoveLine}>
-          -
-        </Button>
-      </Form.Control>
-    </Form.Field>
+    <FormControl fullWidth margin="dense">
+      <Input
+        {...input}
+        endAdornment={
+          <InputAdornment position="end">
+            <IconButton onClick={onAddLine} aria-label="Add line" size="small">
+              <Add />
+            </IconButton>
+            <IconButton
+              onClick={onRemoveLine}
+              aria-label="Remove line"
+              size="small"
+            >
+              <Remove />
+            </IconButton>
+          </InputAdornment>
+        }
+      />
+    </FormControl>
   );
 }

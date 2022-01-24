@@ -1,3 +1,10 @@
+import Checkbox from "@material-ui/core/Checkbox";
+import Input from "@material-ui/core/Input";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+
+import Search from "@material-ui/icons/Search";
+
 import {
   setSearch,
   setOnlyFavorites
@@ -12,22 +19,27 @@ export default function FilterForm() {
 
   return (
     <form>
-      <label>
-        Search:
-        <input
-          type="text"
-          value={search}
-          onChange={(evt) => dispatch(setSearch(evt.target.value))}
-        />
-      </label>
-      <label>
-        <input
-          type="checkbox"
-          checked={onlyFavorites}
-          onChange={(evt) => dispatch(setOnlyFavorites(evt.target.checked))}
-        />
-        Only show favorites
-      </label>
+      <Input
+        type="text"
+        value={search}
+        onChange={(evt) => dispatch(setSearch(evt.target.value))}
+        startAdornment={
+          <InputAdornment position="start">
+            <Search />
+          </InputAdornment>
+        }
+        fullWidth
+      />
+      <FormControlLabel
+        label="Show favorites only"
+        control={
+          <Checkbox
+            color="primary"
+            checked={onlyFavorites}
+            onChange={(evt) => dispatch(setOnlyFavorites(evt.target.checked))}
+          />
+        }
+      />
     </form>
   );
 }

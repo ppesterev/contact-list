@@ -6,8 +6,6 @@ import store from "./store";
 
 import App from "./components/App";
 
-import "bulma/css/bulma.min.css";
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

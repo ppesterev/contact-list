@@ -1,5 +1,8 @@
-import { Formik, Field, FieldArray } from "formik";
-import { Columns } from "react-bulma-components";
+import { Formik, FieldArray } from "formik";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
 
 import { formContactSchema } from "../schemas";
 
@@ -37,34 +40,30 @@ export default function ContactForm({
       initialValues={initialValue}
       onSubmit={onSubmit}
       validationSchema={formContactSchema}
+      validateOnChange={false}
     >
       {({ handleSubmit, values, errors }) => (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
           <FormField name="name" label="Name" />
-          <Columns>
-            <Columns.Column>
+          <Grid container spacing={1}>
+            <Grid item xs={12} sm={6}>
               <FormField name="username" type="text" label="Username" />
-            </Columns.Column>
-            <Columns.Column>
+            </Grid>
+            <Grid item xs={12} sm={6}>
               <FormField name="email" type="email" label="Email" />
-            </Columns.Column>
-          </Columns>
-          <Columns>
-            <Columns.Column>
+            </Grid>
+          </Grid>
+          <Grid container spacing={1}>
+            <Grid item xs={12} sm={6}>
               <FormField name="phone" type="tel" label="Phone number" />
-            </Columns.Column>
-            <Columns.Column>
-              <FormField
-                name="website"
-                type="url"
-                formNoValidate
-                label="Website"
-              />
-            </Columns.Column>
-          </Columns>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <FormField name="website" type="url" label="Website" />
+            </Grid>
+          </Grid>
 
-          <fieldset>
-            <legend>Address</legend>
+          <FormControl component="fieldset" margin="normal" fullWidth>
+            <FormLabel component="legend">Address</FormLabel>
             <FieldArray name="address.localAddress">
               {({ remove, insert }) =>
                 values.address.localAddress.map((_, idx) => (
@@ -82,32 +81,34 @@ export default function ContactForm({
                 ))
               }
             </FieldArray>
-            <Columns>
-              <Columns.Column>
+            <Grid container spacing={1}>
+              <Grid item xs={12} sm={6}>
                 <FormField name="address.city" type="text" label="City" />
-              </Columns.Column>
-              <Columns.Column>
+              </Grid>
+              <Grid item xs={12} sm={6}>
                 <FormField
                   name="address.state"
                   type="text"
                   label="State or province"
                 />
-              </Columns.Column>
-            </Columns>
-            <Columns>
-              <Columns.Column>
+              </Grid>
+            </Grid>
+            <Grid container spacing={1}>
+              <Grid item xs={12} sm={6}>
                 <FormField
                   name="address.zipcode"
                   type="text"
                   label="Postal code"
                 />
-              </Columns.Column>
-              <Columns.Column>
+              </Grid>
+              <Grid item xs={12} sm={6}>
                 <FormField name="address.country" type="text" label="Country" />
-              </Columns.Column>
-            </Columns>
-          </fieldset>
-          <button type="submit">Save</button>
+              </Grid>
+            </Grid>
+          </FormControl>
+          <Button variant="contained" color="primary" type="submit">
+            Save
+          </Button>
         </form>
       )}
     </Formik>

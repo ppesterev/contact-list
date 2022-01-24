@@ -1,7 +1,11 @@
 import { useMemo, ReactNode, Fragment } from "react";
 
+import Typography from "@material-ui/core/Typography";
+
 import ContextualHeading from "./ContextualHeading";
 import HeadingRegion from "./HeadingRegion";
+
+import { makeStyles } from "@material-ui/core/styles";
 
 interface Props<T> {
   items: T[];
@@ -15,12 +19,22 @@ interface Group<T> {
   items: T[];
 }
 
+const useStyles = makeStyles((theme) => ({
+  groupTitle: {
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(2)
+  }
+}));
+
 export default function AlphabeticGrouping<T>({
   items,
   alphabetization,
   reverse = false,
   children
 }: Props<T>) {
+  const classes = useStyles();
+
   const groups: Group<T>[] = useMemo(() => {
     const groups: Group<T>[] = [];
 
@@ -53,7 +67,13 @@ export default function AlphabeticGrouping<T>({
     <>
       {groups.map((group) => (
         <Fragment key={group.initial}>
-          <ContextualHeading>{group.initial}</ContextualHeading>
+          <Typography
+            variant="h6"
+            component={ContextualHeading}
+            className={classes.groupTitle}
+          >
+            {group.initial}
+          </Typography>
           <HeadingRegion>{children(group.items)}</HeadingRegion>
         </Fragment>
       ))}

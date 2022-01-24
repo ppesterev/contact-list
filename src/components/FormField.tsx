@@ -1,7 +1,8 @@
 import { InputHTMLAttributes } from "react";
 
 import { useField } from "formik";
-import { Form } from "react-bulma-components";
+
+import TextField from "@material-ui/core/TextField";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
@@ -19,16 +20,14 @@ export default function FormField({
   const [input, meta, helpers] = useField(name);
 
   return (
-    <Form.Field>
-      {label && <Form.Label>{label}</Form.Label>}
-      <Form.Control>
-        <Form.Input
-          {...rest}
-          {...input}
-          color={meta.touched ? (meta.error ? "danger" : "success") : undefined}
-        />
-      </Form.Control>
-      {meta.error && meta.touched && <Form.Help>{meta.error}</Form.Help>}
-    </Form.Field>
+    <TextField
+      {...input}
+      {...rest}
+      label={label}
+      error={!!(meta.error && meta.touched)}
+      helperText={meta.touched ? meta.error : null}
+      fullWidth
+      margin="normal"
+    />
   );
 }

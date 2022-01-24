@@ -1,3 +1,10 @@
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import IconButton from "@material-ui/core/IconButton";
+
+import ArrowUpward from "@material-ui/icons/ArrowUpward";
+import ArrowDownward from "@material-ui/icons/ArrowDownward";
+
 import { sortBy, setDirection } from "../store/slices/sorting/sortingSlice";
 
 import { useAppDispatch, useAppSelector } from "../store/hooks";
@@ -9,7 +16,7 @@ export default function SortForm() {
   const dispatch = useAppDispatch();
   const { sortedBy, isDescending } = useAppSelector(getSorting);
 
-  const onSortingSelected = (value: string) => {
+  const onSortingSelected = (value: any) => {
     // appease typescript
     let option = SORTING_OPTIONS.find((opt) => opt === value);
     if (!option) {
@@ -22,19 +29,21 @@ export default function SortForm() {
 
   return (
     <form>
-      <select
+      <Select
+        labelId="sort-option-select-label"
+        id="sort-option-select"
         value={sortedBy}
         onChange={(evt) => onSortingSelected(evt.target.value)}
       >
         {SORTING_OPTIONS.map((opt) => (
-          <option key={opt} value={opt}>
+          <MenuItem key={opt} value={opt}>
             By {opt}
-          </option>
+          </MenuItem>
         ))}
-      </select>
-      <button type="button" onClick={onSortDirectionChanged}>
-        {isDescending ? "Desc." : "Asc."}
-      </button>
+      </Select>
+      <IconButton type="button" onClick={onSortDirectionChanged} size="small">
+        {isDescending ? <ArrowDownward /> : <ArrowUpward />}
+      </IconButton>
     </form>
   );
 }

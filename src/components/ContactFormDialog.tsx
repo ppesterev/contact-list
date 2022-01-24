@@ -1,4 +1,6 @@
-import { Modal } from "react-bulma-components";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
 
 import ContactForm from "./ContactForm";
 
@@ -18,23 +20,17 @@ export default function ContactFormDialog({
   initialValue
 }: Props) {
   return (
-    <Modal show={show} onClose={onClose} showClose closeOnEsc>
-      <Modal.Card>
-        <Modal.Card.Header>
-          <Modal.Card.Title>
-            {initialValue ? "Edit" : "Add"} contact
-          </Modal.Card.Title>
-        </Modal.Card.Header>
-        <Modal.Card.Body>
-          <ContactForm
-            initialValue={initialValue}
-            onSubmit={(contact) => {
-              onSubmit(contact);
-              onClose();
-            }}
-          />
-        </Modal.Card.Body>
-      </Modal.Card>
-    </Modal>
+    <Dialog open={show} onClose={onClose}>
+      <DialogTitle>{initialValue ? "Edit" : "Add"} contact</DialogTitle>
+      <DialogContent>
+        <ContactForm
+          initialValue={initialValue}
+          onSubmit={(contact) => {
+            onSubmit(contact);
+            onClose();
+          }}
+        />
+      </DialogContent>
+    </Dialog>
   );
 }

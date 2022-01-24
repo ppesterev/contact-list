@@ -2,10 +2,7 @@ import { useState } from "react";
 
 import { useAppSelector, useAppDispatch } from "../store/hooks";
 import { getSorting, getContactsToDisplay } from "../store/selectors";
-import {
-  addContact,
-  updateContact
-} from "../store/slices/contacts/contactsSlice";
+import { updateContact } from "../store/slices/contacts/contactsSlice";
 
 import ContactFormDialog from "./ContactFormDialog";
 import ContactsList from "./ContactsList";
@@ -19,12 +16,6 @@ export default function ContactsDisplay() {
   const records = useAppSelector(getContactsToDisplay);
 
   const [editedContactId, setEditedContactId] = useState<ID | null>(null);
-  const [addingContact, setAddingContact] = useState(false);
-
-  const onAddSubmitted = (contact: Contact) => {
-    dispatch(addContact({ timestamp: Date.now(), contact }));
-    setAddingContact(false);
-  };
 
   const onEditSubmitted = (contact: Contact) => {
     if (!editedContactId) {
@@ -45,14 +36,8 @@ export default function ContactsDisplay() {
 
   return (
     <>
-      <button onClick={() => setAddingContact(true)}>New contact</button>
       <ContactFormDialog
-        show={addingContact && editedContactId === null}
-        onClose={() => setAddingContact(false)}
-        onSubmit={onAddSubmitted}
-      />
-      <ContactFormDialog
-        show={!addingContact && editedContactId !== null}
+        show={editedContactId !== null}
         onClose={() => setEditedContactId(null)}
         onSubmit={onEditSubmitted}
         initialValue={
