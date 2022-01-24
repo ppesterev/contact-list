@@ -6,7 +6,7 @@ import { loadContacts } from "../store/slices/contacts/contactsSlice";
 
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 
-import ContactsList from "./ContactsList";
+import ContactsDisplay from "./ContactsDisplay";
 import SortForm from "./SortForm";
 import FilterForm from "./FilterForm";
 
@@ -36,7 +36,7 @@ function App() {
       </section>
       <section>
         <h2>Contact list</h2>
-        <ContactsList />
+        <ContactsDisplay />
       </section>
     </div>
   );
