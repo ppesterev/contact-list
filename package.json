@@ -11,7 +11,9 @@
     "deepmerge": "^4.2.2",
     "formik": "^2.2.9",
     "react": "^17.0.2",
+    "react-bulma-components": "^4.0.7",
     "react-dom": "^17.0.2",
+    "react-feather": "^2.0.9",
     "react-redux": "^7.2.6",
     "yup": "^0.32.11"
   },
