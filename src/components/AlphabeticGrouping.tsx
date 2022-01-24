@@ -1,5 +1,8 @@
 import { useMemo, ReactNode, Fragment } from "react";
 
+import ContextualHeading from "./ContextualHeading";
+import HeadingRegion from "./HeadingRegion";
+
 interface Props<T> {
   items: T[];
   alphabetization: (item: T) => string;
@@ -47,8 +50,8 @@ export default function AlphabeticGrouping<T>({
     <>
       {groups.map((group) => (
         <Fragment key={group.initial}>
-          <h2>{group.initial}</h2>
-          {children(group.items)}
+          <ContextualHeading>{group.initial}</ContextualHeading>
+          <HeadingRegion>{children(group.items)}</HeadingRegion>
         </Fragment>
       ))}
     </>
