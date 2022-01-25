@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     listStyle: "none"
   },
   contactItem: {
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(3)
   }
 }));
 
