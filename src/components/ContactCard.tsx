@@ -122,9 +122,9 @@ export default function ContactCard({ record, onEditContact }: Props) {
             )}
             {website && (
               <Typography variant="body2" gutterBottom>
-                <Link href={website}>
+                <Link href={`https://${website.replace(/^https?:\/\//, "")}`}>
                   <Public className={classes.icon} />
-                  {website}
+                  {website.replace(/^https?:\/\//, "")}
                 </Link>
               </Typography>
             )}
