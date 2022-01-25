@@ -59,6 +59,27 @@ export default function ContactCard({ record, onEditContact }: Props) {
 
   const [isExpanded, setIsExpanded] = useState(false);
 
+  const { localAddress, city, state, zipcode, country } = address;
+  const addressDisplay = (
+    <address>
+      {[
+        ...localAddress,
+        `${city}${state ? `, ${state}` : ""}`,
+        zipcode,
+        country
+      ]
+        .filter(Boolean)
+        .map((line) => (
+          <>
+            <Typography variant="body2" component="span">
+              {line}
+            </Typography>
+            <br />
+          </>
+        ))}
+    </address>
+  );
+
   return (
     <article className={classes.card}>
       <Grid
@@ -119,6 +140,7 @@ export default function ContactCard({ record, onEditContact }: Props) {
           </Grid>
         </Grid>
         <Collapse in={isExpanded}>
+          {addressDisplay}
           <Button color="primary" onClick={() => onEditContact(id)}>
             Edit
           </Button>
